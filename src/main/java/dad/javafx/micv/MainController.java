@@ -12,6 +12,8 @@ import org.hildan.fxgson.FxGson;
 import com.google.gson.Gson;
 
 import dad.javafx.micv.contacto.ContactoController;
+import dad.javafx.micv.formacion.FormacionController;
+
 import dad.javafx.micv.model.CV;
 import dad.javafx.micv.personal.PersonalController;
 import dad.javafx.micv.utils.JSONUtils;
@@ -33,6 +35,7 @@ public class MainController implements Initializable {
 	
 	private PersonalController personalController = new PersonalController();
 	private ContactoController contactoController = new ContactoController();
+	private FormacionController formacionController = new FormacionController();
 
 	// model
 	
@@ -73,6 +76,7 @@ public class MainController implements Initializable {
 
 		personalTab.setContent(personalController.getView());
 		contactoTab.setContent(contactoController.getView());
+		formacionTab.setContent(formacionController.getView());
 
 		cv.addListener((o, ov, nv) -> onCVChanged(o, ov, nv));
 		
@@ -86,6 +90,7 @@ public class MainController implements Initializable {
     		
     		personalController.personalProperty().unbind(); // desbindeo personalProperty del CV anterior
 			contactoController.contactoProperty().unbind();
+			formacionController.formacionProperty().unbind();
 
     		// desbindear resto de controllers
     		
@@ -95,7 +100,7 @@ public class MainController implements Initializable {
     		
     		personalController.personalProperty().bind(nv.personalProperty()); // bindeo personalProperty del nuevo CV
 			contactoController.contactoProperty().bind(nv.contactoProperty());
-
+			formacionController.formacionProperty().bind(nv.formacionProperty());
     		// bindear resto de controllers
     		
     	}
