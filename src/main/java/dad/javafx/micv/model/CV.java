@@ -4,7 +4,6 @@ import org.hildan.fxgson.FxGson;
 
 import com.google.gson.Gson;
 
-import dad.javafx.micv.model.Titulo;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -17,6 +16,8 @@ public class CV {
 	private ObjectProperty<Personal> personal = new SimpleObjectProperty<Personal>(new Personal());
 	private ObjectProperty<Contacto> contacto = new SimpleObjectProperty<Contacto>(new Contacto());
 	private ListProperty<Titulo> formacion = new SimpleListProperty<Titulo>(FXCollections.observableArrayList());
+	private ListProperty<Experiencia> experiencia = new SimpleListProperty<Experiencia>(FXCollections.observableArrayList());
+
 
 	public final ObjectProperty<Personal> personalProperty() {
 		return this.personal;
@@ -77,6 +78,21 @@ public class CV {
 	public final void setFormacion(final ObservableList<Titulo> formacion) {
 		this.formacionProperty().set(formacion);
 	}
+
+	public final ListProperty<Experiencia> experienciaProperty() {
+		return this.experiencia;
+	}
+	
+
+	public final ObservableList<Experiencia> getExperiencia() {
+		return this.experienciaProperty().get();
+	}
+	
+
+	public final void setExperiencia(final ObservableList<Experiencia> experiencia) {
+		this.experienciaProperty().set(experiencia);
+	}
+	
 	
 	
 	

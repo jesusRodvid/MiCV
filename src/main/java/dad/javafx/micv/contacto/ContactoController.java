@@ -10,6 +10,7 @@ import dad.javafx.micv.model.Contacto;
 import dad.javafx.micv.model.Email;
 import dad.javafx.micv.model.Telefono;
 import dad.javafx.micv.model.Web;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -28,8 +29,10 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class ContactoController implements Initializable{
 	
@@ -148,6 +151,11 @@ public class ContactoController implements Initializable{
 		dialog.setTitle("Nueva Web");
 		dialog.setHeaderText("Crear una nueva dirección web.");
 		dialog.setContentText("URL:");
+		// Get the Stage.
+				Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+
+				// Add a custom icon.
+				stage.getIcons().add(new Image(this.getClass().getResource("/images/cv64x64.png").toString()));
 		Optional<String> result = dialog.showAndWait();
 		if (result.isPresent()) {
 			Web addedWeb = new Web();
@@ -162,7 +170,11 @@ public class ContactoController implements Initializable{
     	alert.setTitle("Eliminar");
     	alert.setHeaderText("¿Seguro que deseas borrar este registro?");
     	alert.setContentText("Email: " + tableviewMail.getSelectionModel().getSelectedItem().getDireccion());
+    	// Get the Stage.
+    			Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 
+    			// Add a custom icon.
+    			stage.getIcons().add(new Image(this.getClass().getResource("/images/cv64x64.png").toString()));
     	Optional<ButtonType> result = alert.showAndWait();
     	if (result.get() == ButtonType.OK){
     	    // ... user chose OK
@@ -179,7 +191,11 @@ public class ContactoController implements Initializable{
     	alert.setHeaderText("¿Seguro que deseas borrar este registro?");
     	alert.setContentText("Telefono: " + tableviewtelefono.getSelectionModel().getSelectedItem().getNumero() +
     			"\nTipo : " + tableviewtelefono.getSelectionModel().getSelectedItem().getTipo());
+    	// Get the Stage.
+    			Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 
+    			// Add a custom icon.
+    			stage.getIcons().add(new Image(this.getClass().getResource("/images/cv64x64.png").toString()));
     	Optional<ButtonType> result = alert.showAndWait();
     	if (result.get() == ButtonType.OK){
     	    // ... user chose OK
@@ -197,7 +213,11 @@ public class ContactoController implements Initializable{
     	alert.setTitle("Eliminar");
     	alert.setHeaderText("¿Seguro que deseas borrar este registro?");
     	alert.setContentText("URL: " + tableviewWeb.getSelectionModel().getSelectedItem().getUrl());
+    	// Get the Stage.
+    			Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 
+    			// Add a custom icon.
+    			stage.getIcons().add(new Image(this.getClass().getResource("/images/cv64x64.png").toString()));
     	Optional<ButtonType> result = alert.showAndWait();
     	if (result.get() == ButtonType.OK){
     	    // ... user chose OK
@@ -254,6 +274,9 @@ public class ContactoController implements Initializable{
 			// bind tabla web
 			tableviewMail.itemsProperty().bindBidirectional(nv.emailsProperty());
 		}
+		deleteMailbutton.disableProperty().bind(Bindings.isEmpty(getContacto().emailsProperty()));
+		deleteTelefonoButton.disableProperty().bind(Bindings.isEmpty(getContacto().telefonosProperty()));
+		deleteWebbutton.disableProperty().bind(Bindings.isEmpty(getContacto().websProperty()));
 	}
 
 	public final ObjectProperty<Contacto> contactoProperty() {

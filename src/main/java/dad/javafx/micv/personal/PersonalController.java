@@ -136,7 +136,10 @@ public class PersonalController implements Initializable {
 			apellidosText.textProperty().unbindBidirectional(ov.apellidosProperty());
 			fechaNacimientoDate.valueProperty().unbindBidirectional(ov.fechaNacimientoProperty());
 			nacionalidadesList.itemsProperty().unbind();
-
+			direccionText.textProperty().unbindBidirectional(nv.direccionProperty());
+			codigoPostalText.textProperty().unbindBidirectional(nv.codigoPostalProperty());
+			localidadText.textProperty().unbindBidirectional(nv.localidadProperty());
+			paisCombo.valueProperty().unbindBidirectional(nv.paisProperty());
 			// TODO desbindear el resto de propiedades
 			
 		}
@@ -148,7 +151,10 @@ public class PersonalController implements Initializable {
 			apellidosText.textProperty().bindBidirectional(nv.apellidosProperty());
 			fechaNacimientoDate.valueProperty().bindBidirectional(nv.fechaNacimientoProperty());
 			nacionalidadesList.itemsProperty().bind(nv.nacionalidadesProperty());
-
+			direccionText.textProperty().bindBidirectional(nv.direccionProperty());
+			codigoPostalText.textProperty().bindBidirectional(nv.codigoPostalProperty());
+			localidadText.textProperty().bindBidirectional(nv.localidadProperty());
+			paisCombo.valueProperty().bindBidirectional(nv.paisProperty());
 			// TODO bindear el resto de propiedades			
 			
 		}

@@ -1,4 +1,4 @@
-package dad.javafx.micv.formacion;
+package dad.javafx.micv.experiencia;
 
 import java.io.IOException;
 import java.net.URL;
@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import dad.javafx.micv.model.Titulo;
+import dad.javafx.micv.model.Experiencia;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -29,14 +29,15 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
 
-public class FormacionController implements Initializable{
-	private ListProperty<Titulo> formacion = new SimpleListProperty<Titulo>(FXCollections.observableArrayList());
+public class ExperienciaController implements Initializable{
 
+	private ListProperty<Experiencia> experiencia = new SimpleListProperty<Experiencia>(FXCollections.observableArrayList());
 
-	public FormacionController() throws IOException {
+	
+    public ExperienciaController() throws IOException {
 		super();
 		// TODO Auto-generated constructor stub
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/FormacionView.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ExperienciaView.fxml"));
 		loader.setController(this);
 		loader.load();
 	}
@@ -45,55 +46,56 @@ public class FormacionController implements Initializable{
     private HBox view;
 
     @FXML
-    private TableView<Titulo> formaciontableview;
+    private TableView<Experiencia> experienciatableview;
 
     @FXML
-    private TableColumn<Titulo, LocalDate> desdecolumn;
+    private TableColumn<Experiencia,LocalDate> desdecolumn;
 
     @FXML
-    private TableColumn<Titulo, LocalDate> hastacolumn;
+    private TableColumn<Experiencia,LocalDate> hastacolumn;
 
     @FXML
-    private TableColumn<Titulo, String> denominacioncolumn;
+    private TableColumn<Experiencia, String> denominacioncolumn;
 
     @FXML
-    private TableColumn<Titulo, String> organizadorcolumn;
+    private TableColumn<Experiencia, String> empleadorcolumn;
 
     @FXML
-    private VBox vboxformacion;
+    private VBox vboxexperiencia;
 
     @FXML
-    private Button addFormacionButton;
+    private Button addExperienciaButton;
 
     @FXML
-    private Button deleteformacionbutton;
+    private Button deleteExperienciabutton;
 
     @FXML
-    void onAddFormacionAction(ActionEvent event) {
-    	AddFormacionDialog dialog = new AddFormacionDialog();
-		Optional<Titulo> result = dialog.showAndWait();
+    void onAddExperienciaAction(ActionEvent event) {
+    	AddExperienciaDialog dialog = new AddExperienciaDialog();
+		Optional<Experiencia> result = dialog.showAndWait();
 		if (result.isPresent()) {
 			System.out.println(result.get());
-			getFormacion().add(result.get());
+			getExperiencia().add(result.get());
 		}
 
     }
 
     @FXML
-    void onDeleteFormacionAction(ActionEvent event) {
+    void onDeleteExperienciaAction(ActionEvent event) {
     	Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Eliminar");
 		alert.setHeaderText("¿Seguro que deseas borrar este registro?");
 		alert.setContentText("¿Estas seguro?");
 		// Get the Stage.
-				Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 
-				// Add a custom icon.
-				stage.getIcons().add(new Image(this.getClass().getResource("/images/cv64x64.png").toString()));
+		// Add a custom icon.
+		stage.getIcons().add(new Image(this.getClass().getResource("/images/cv64x64.png").toString()));
+		
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
 			// ... user chose OK
-			formaciontableview.getItems().removeAll(formaciontableview.getSelectionModel().getSelectedItem());
+			experienciatableview.getItems().removeAll(experienciatableview.getSelectionModel().getSelectedItem());
 		} else {
 			// ... user chose CANCEL or closed the dialog
 		}
@@ -106,33 +108,16 @@ public class FormacionController implements Initializable{
 		desdecolumn.setCellValueFactory(v -> v.getValue().desdeProperty());
 		hastacolumn.setCellValueFactory(v -> v.getValue().hastaProperty());
 		denominacioncolumn.setCellValueFactory(v -> v.getValue().denominacionProperty());
-		organizadorcolumn.setCellValueFactory(v -> v.getValue().organizadorProperty());
+		empleadorcolumn.setCellValueFactory(v -> v.getValue().empleadorProperty());
 
 		desdecolumn.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter()));
 		hastacolumn.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter()));
 		denominacioncolumn.setCellFactory(TextFieldTableCell.forTableColumn());
-		organizadorcolumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		empleadorcolumn.setCellFactory(TextFieldTableCell.forTableColumn());
 		
-		formaciontableview.itemsProperty().bind(formacion);
-		deleteformacionbutton.disableProperty().bind(Bindings.isEmpty(formacion));
+		experienciatableview.itemsProperty().bind(experiencia);
+		deleteExperienciabutton.disableProperty().bind(Bindings.isEmpty(experiencia));
 
-
-	}
-	
-	
-
-	public final ListProperty<Titulo> formacionProperty() {
-		return this.formacion;
-	}
-	
-
-	public final ObservableList<Titulo> getFormacion() {
-		return this.formacionProperty().get();
-	}
-	
-
-	public final void setFormacion(final ObservableList<Titulo> formacion) {
-		this.formacionProperty().set(formacion);
 	}
 
 	public HBox getView() {
@@ -142,6 +127,21 @@ public class FormacionController implements Initializable{
 	public void setView(HBox view) {
 		this.view = view;
 	}
+
+	public final ListProperty<Experiencia> experienciaProperty() {
+		return this.experiencia;
+	}
+	
+
+	public final ObservableList<Experiencia> getExperiencia() {
+		return this.experienciaProperty().get();
+	}
+	
+
+	public final void setExperiencia(final ObservableList<Experiencia> experiencia) {
+		this.experienciaProperty().set(experiencia);
+	}
+	
 	
 }
 

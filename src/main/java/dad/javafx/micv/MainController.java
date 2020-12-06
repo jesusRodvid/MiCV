@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import org.apache.commons.io.FileUtils;
@@ -12,11 +13,13 @@ import org.hildan.fxgson.FxGson;
 import com.google.gson.Gson;
 
 import dad.javafx.micv.contacto.ContactoController;
+import dad.javafx.micv.experiencia.ExperienciaController;
 import dad.javafx.micv.formacion.FormacionController;
 
 import dad.javafx.micv.model.CV;
 import dad.javafx.micv.personal.PersonalController;
 import dad.javafx.micv.utils.JSONUtils;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -24,18 +27,25 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tab;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
 public class MainController implements Initializable {
 	
+	
+	
 	// controllers
 	
 	private PersonalController personalController = new PersonalController();
 	private ContactoController contactoController = new ContactoController();
 	private FormacionController formacionController = new FormacionController();
+	private ExperienciaController experienciaController = new ExperienciaController();
+
 
 	// model
 	
@@ -77,6 +87,7 @@ public class MainController implements Initializable {
 		personalTab.setContent(personalController.getView());
 		contactoTab.setContent(contactoController.getView());
 		formacionTab.setContent(formacionController.getView());
+		experienciaTab.setContent(experienciaController.getView());
 
 		cv.addListener((o, ov, nv) -> onCVChanged(o, ov, nv));
 		
@@ -91,6 +102,7 @@ public class MainController implements Initializable {
     		personalController.personalProperty().unbind(); // desbindeo personalProperty del CV anterior
 			contactoController.contactoProperty().unbind();
 			formacionController.formacionProperty().unbind();
+			experienciaController.experienciaProperty().unbind();//no te olvides de generar getters y setters de javafx
 
     		// desbindear resto de controllers
     		
@@ -101,6 +113,8 @@ public class MainController implements Initializable {
     		personalController.personalProperty().bind(nv.personalProperty()); // bindeo personalProperty del nuevo CV
 			contactoController.contactoProperty().bind(nv.contactoProperty());
 			formacionController.formacionProperty().bind(nv.formacionProperty());
+			experienciaController.experienciaProperty().bind(nv.experienciaProperty()); //crear list en la clase CV y generar getters y setters
+
     		// bindear resto de controllers
     		
     	}
@@ -144,7 +158,6 @@ public class MainController implements Initializable {
     	fileChooser.getExtensionFilters().add(new ExtensionFilter("Todos los archivos", "*.*"));
     	File cvFile = fileChooser.showSaveDialog(App.getPrimaryStage());
     	if (cvFile != null) {
-    		
     		try {
 				JSONUtils.toJson(cvFile, cv.get());
 			} catch (IOException e) {
@@ -163,7 +176,17 @@ public class MainController implements Initializable {
 
     @FXML
     void onSalirAction(ActionEvent event) {
-
+    	//ventana de alerta al salir 
+    	Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Dialogo de confirmacion");
+		alert.setHeaderText("Vas a cerrar el programa");
+		alert.setContentText("¿Estás seguro?");
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK) {
+			Platform.exit();
+		} else {
+			// ... user chose CANCEL or closed the dialog
+		}
     }
 	
 }
