@@ -17,12 +17,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
@@ -121,9 +124,9 @@ public class ContactoController implements Initializable{
 		dialog.setContentText("E-mail:");
 		Optional<String> result = dialog.showAndWait();
 		if (result.isPresent()) {
-			Email anadido = new Email();
-			anadido.setDireccion(result.get());
-			contacto.getValue().getEmails().add(anadido);
+			Email addedEmail = new Email();
+			addedEmail.setDireccion(result.get());
+			contacto.getValue().getEmails().add(addedEmail);
 		}
 
     }
@@ -147,24 +150,61 @@ public class ContactoController implements Initializable{
 		dialog.setContentText("URL:");
 		Optional<String> result = dialog.showAndWait();
 		if (result.isPresent()) {
-			Web anadida = new Web();
-			anadida.setUrl(result.get());
-			contacto.getValue().getWebs().add(anadida);
+			Web addedWeb = new Web();
+			addedWeb.setUrl(result.get());
+			contacto.getValue().getWebs().add(addedWeb);
 		}
     }
 
     @FXML
     void onDeleteMailAction(ActionEvent event) {
+    	Alert alert = new Alert(AlertType.CONFIRMATION);
+    	alert.setTitle("Eliminar");
+    	alert.setHeaderText("¿Seguro que deseas borrar este registro?");
+    	alert.setContentText("Email: " + tableviewMail.getSelectionModel().getSelectedItem().getDireccion());
 
+    	Optional<ButtonType> result = alert.showAndWait();
+    	if (result.get() == ButtonType.OK){
+    	    // ... user chose OK
+    		tableviewMail.getItems().removeAll(tableviewMail.getSelectionModel().getSelectedItem());
+    	} else {
+    	    // ... user chose CANCEL or closed the dialog
+    	}
     }
 
     @FXML
     void onDeleteTelefonoButton(ActionEvent event) {
+    	Alert alert = new Alert(AlertType.CONFIRMATION);
+    	alert.setTitle("Eliminar");
+    	alert.setHeaderText("¿Seguro que deseas borrar este registro?");
+    	alert.setContentText("Telefono: " + tableviewtelefono.getSelectionModel().getSelectedItem().getNumero() +
+    			"\nTipo : " + tableviewtelefono.getSelectionModel().getSelectedItem().getTipo());
+
+    	Optional<ButtonType> result = alert.showAndWait();
+    	if (result.get() == ButtonType.OK){
+    	    // ... user chose OK
+    		tableviewtelefono.getItems().removeAll(tableviewtelefono.getSelectionModel().getSelectedItem());
+
+    	} else {
+    	    // ... user chose CANCEL or closed the dialog
+    	}
 
     }
 
     @FXML
     void onDeleteWebAction(ActionEvent event) {
+    	Alert alert = new Alert(AlertType.CONFIRMATION);
+    	alert.setTitle("Eliminar");
+    	alert.setHeaderText("¿Seguro que deseas borrar este registro?");
+    	alert.setContentText("URL: " + tableviewWeb.getSelectionModel().getSelectedItem().getUrl());
+
+    	Optional<ButtonType> result = alert.showAndWait();
+    	if (result.get() == ButtonType.OK){
+    	    // ... user chose OK
+    		tableviewWeb.getItems().removeAll(tableviewWeb.getSelectionModel().getSelectedItem());
+    	} else {
+    	    // ... user chose CANCEL or closed the dialog
+    	}
 
     }
 
@@ -229,7 +269,6 @@ public class ContactoController implements Initializable{
 	public final void setContacto(final Contacto contacto) {
 		this.contactoProperty().set(contacto);
 	}
-	
 	
 	
 }
