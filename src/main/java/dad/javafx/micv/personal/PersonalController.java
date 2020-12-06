@@ -87,7 +87,7 @@ public class PersonalController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		// csv nacionalidades
+				// Cargar Nacionallidades
 				String line;
 				InputStream nacionalidadesStream = getClass().getResourceAsStream("/csv/nacionalidades.csv");
 				BufferedReader reader = new BufferedReader(new InputStreamReader(nacionalidadesStream));
@@ -101,7 +101,7 @@ public class PersonalController implements Initializable {
 					e.printStackTrace();
 				}
 				
-				// csv paises
+				// Cargar Paises
 				InputStream paisesStream = getClass().getResourceAsStream("/csv/paises.csv");
 				reader = new BufferedReader(new InputStreamReader(paisesStream));
 				String linea;
@@ -115,14 +115,11 @@ public class PersonalController implements Initializable {
 					e.printStackTrace();
 				}
 				
-				//Cargar paises en el combo
+				//Añadir paises al combo
 				paisCombo.getItems().addAll(listapaises);
 				selected.bind(nacionalidadesList.getSelectionModel().selectedItemProperty());
-				
+				//funcionalidad al cambiar personal
 				personal.addListener((o, ov, nv) -> onPersonalChanged(o, ov, nv));
-				//Bind del listview a la vista
-				//nacionalidadesList.itemsProperty().bind(nacionalidades);
-				//Bind de la fila selleccionada del listview
 				
 			}
 		
@@ -166,8 +163,6 @@ public class PersonalController implements Initializable {
 	void onNuevaNacionalidadAction(ActionEvent event) {
 
 		ChoiceDialog<Nacionalidad> dialog = new ChoiceDialog<>(listanacionalidad.get(0), listanacionalidad);
-		
-		
 		dialog.setTitle("Nueva nacionalidad");
 		dialog.setHeaderText("Añadir nacionalidad");
 		dialog.setContentText("Seleccione una nacionalidad");

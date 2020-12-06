@@ -10,6 +10,7 @@ import javafx.beans.property.SimpleObjectProperty;
 public class CV {
 
 	private ObjectProperty<Personal> personal = new SimpleObjectProperty<Personal>(new Personal());
+	private ObjectProperty<Contacto> contacto = new SimpleObjectProperty<Contacto>(new Contacto());
 
 	public final ObjectProperty<Personal> personalProperty() {
 		return this.personal;
@@ -42,6 +43,21 @@ public class CV {
 		cv = gson.fromJson(json, CV.class); // convertir json a modelo de datos (unmarshalling) 
 		
 	}
+
+	public final ObjectProperty<Contacto> contactoProperty() {
+		return this.contacto;
+	}
+	
+
+	public final Contacto getContacto() {
+		return this.contactoProperty().get();
+	}
+	
+
+	public final void setContacto(final Contacto contacto) {
+		this.contactoProperty().set(contacto);
+	}
+	
 	
 }
 

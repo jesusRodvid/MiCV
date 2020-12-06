@@ -11,6 +11,7 @@ import org.hildan.fxgson.FxGson;
 
 import com.google.gson.Gson;
 
+import dad.javafx.micv.contacto.ContactoController;
 import dad.javafx.micv.model.CV;
 import dad.javafx.micv.personal.PersonalController;
 import dad.javafx.micv.utils.JSONUtils;
@@ -31,7 +32,8 @@ public class MainController implements Initializable {
 	// controllers
 	
 	private PersonalController personalController = new PersonalController();
-	
+	private ContactoController contactoController = new ContactoController();
+
 	// model
 	
 	private ObjectProperty<CV> cv = new SimpleObjectProperty<>();
@@ -70,7 +72,8 @@ public class MainController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 
 		personalTab.setContent(personalController.getView());
-		
+		contactoTab.setContent(contactoController.getView());
+
 		cv.addListener((o, ov, nv) -> onCVChanged(o, ov, nv));
 		
 		cv.set(new CV());
@@ -82,6 +85,8 @@ public class MainController implements Initializable {
     	if (ov != null) {
     		
     		personalController.personalProperty().unbind(); // desbindeo personalProperty del CV anterior
+			contactoController.contactoProperty().unbind();
+
     		// desbindear resto de controllers
     		
     	}
@@ -89,6 +94,8 @@ public class MainController implements Initializable {
     	if (nv != null) {
     		
     		personalController.personalProperty().bind(nv.personalProperty()); // bindeo personalProperty del nuevo CV
+			contactoController.contactoProperty().bind(nv.contactoProperty());
+
     		// bindear resto de controllers
     		
     	}
@@ -99,8 +106,8 @@ public class MainController implements Initializable {
     void onAbrirAction(ActionEvent event) {
 
     	FileChooser fileChooser = new FileChooser();
-    	fileChooser.setTitle("Abrir un currículum");
-    	fileChooser.getExtensionFilters().add(new ExtensionFilter("Currículum Vitae (*.cv)", "*.cv"));
+    	fileChooser.setTitle("Abrir un curriculum");
+    	fileChooser.getExtensionFilters().add(new ExtensionFilter("Curriculum Vitae (*.cv)", "*.cv"));
     	fileChooser.getExtensionFilters().add(new ExtensionFilter("Todos los archivos", "*.*"));
     	File cvFile = fileChooser.showOpenDialog(App.getPrimaryStage());
     	if (cvFile != null) {
@@ -127,8 +134,8 @@ public class MainController implements Initializable {
     void onGuardarComoAction(ActionEvent event) {
 
     	FileChooser fileChooser = new FileChooser();
-    	fileChooser.setTitle("Guardar un currículum");
-    	fileChooser.getExtensionFilters().add(new ExtensionFilter("Currículum Vitae (*.cv)", "*.cv"));
+    	fileChooser.setTitle("Guardar un curriculum");
+    	fileChooser.getExtensionFilters().add(new ExtensionFilter("Curriculum Vitae (*.cv)", "*.cv"));
     	fileChooser.getExtensionFilters().add(new ExtensionFilter("Todos los archivos", "*.*"));
     	File cvFile = fileChooser.showSaveDialog(App.getPrimaryStage());
     	if (cvFile != null) {
