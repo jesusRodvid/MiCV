@@ -17,6 +17,7 @@ public class CV {
 	private ObjectProperty<Contacto> contacto = new SimpleObjectProperty<Contacto>(new Contacto());
 	private ListProperty<Titulo> formacion = new SimpleListProperty<Titulo>(FXCollections.observableArrayList());
 	private ListProperty<Experiencia> experiencia = new SimpleListProperty<Experiencia>(FXCollections.observableArrayList());
+	private ListProperty<Conocimiento> habilidades = new SimpleListProperty<Conocimiento>(FXCollections.observableArrayList());
 
 
 	public final ObjectProperty<Personal> personalProperty() {
@@ -92,9 +93,20 @@ public class CV {
 	public final void setExperiencia(final ObservableList<Experiencia> experiencia) {
 		this.experienciaProperty().set(experiencia);
 	}
+
+	public final ListProperty<Conocimiento> habilidadesProperty() {
+		return this.habilidades;
+	}
 	
+
+	public final ObservableList<Conocimiento> getHabilidades() {
+		return this.habilidadesProperty().get();
+	}
 	
-	
+
+	public final void setHabilidades(final ObservableList<Conocimiento> habilidades) {
+		this.habilidadesProperty().set(habilidades);
+	}	
 	
 }
 

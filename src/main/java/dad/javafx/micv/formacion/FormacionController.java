@@ -103,29 +103,24 @@ public class FormacionController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
+		formaciontableview.itemsProperty().bind(formacion);
 		desdecolumn.setCellValueFactory(v -> v.getValue().desdeProperty());
 		hastacolumn.setCellValueFactory(v -> v.getValue().hastaProperty());
 		denominacioncolumn.setCellValueFactory(v -> v.getValue().denominacionProperty());
 		organizadorcolumn.setCellValueFactory(v -> v.getValue().organizadorProperty());
-
 		desdecolumn.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter()));
 		hastacolumn.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter()));
 		denominacioncolumn.setCellFactory(TextFieldTableCell.forTableColumn());
 		organizadorcolumn.setCellFactory(TextFieldTableCell.forTableColumn());
-		
-		formaciontableview.itemsProperty().bind(formacion);
 		deleteformacionbutton.disableProperty().bind(Bindings.isEmpty(formacion));
 
 
-	}
+	}	
 	
-	
-
 	public final ListProperty<Titulo> formacionProperty() {
 		return this.formacion;
 	}
 	
-
 	public final ObservableList<Titulo> getFormacion() {
 		return this.formacionProperty().get();
 	}

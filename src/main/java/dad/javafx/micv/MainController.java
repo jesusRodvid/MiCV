@@ -12,6 +12,7 @@ import org.hildan.fxgson.FxGson;
 
 import com.google.gson.Gson;
 
+import dad.javafx.micv.conocimiento.CononocimientoController;
 import dad.javafx.micv.contacto.ContactoController;
 import dad.javafx.micv.experiencia.ExperienciaController;
 import dad.javafx.micv.formacion.FormacionController;
@@ -31,20 +32,24 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tab;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 
 public class MainController implements Initializable {
 	
-	
-	
+	//variable para que sea posible guardar el fichero abierto 
+	String openfile;
+
 	// controllers
 	
 	private PersonalController personalController = new PersonalController();
 	private ContactoController contactoController = new ContactoController();
 	private FormacionController formacionController = new FormacionController();
 	private ExperienciaController experienciaController = new ExperienciaController();
+	private CononocimientoController conocimientosController = new CononocimientoController();
 
 
 	// model
@@ -84,10 +89,11 @@ public class MainController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		personalTab.setContent(personalController.getView());
+		personalTab.setContent(personalController.getView()); //recuerda generar setters y getter de la view en el controller
 		contactoTab.setContent(contactoController.getView());
 		formacionTab.setContent(formacionController.getView());
 		experienciaTab.setContent(experienciaController.getView());
+		conocimientosTab.setContent(conocimientosController.getView());
 
 		cv.addListener((o, ov, nv) -> onCVChanged(o, ov, nv));
 		
@@ -103,7 +109,7 @@ public class MainController implements Initializable {
 			contactoController.contactoProperty().unbind();
 			formacionController.formacionProperty().unbind();
 			experienciaController.experienciaProperty().unbind();//no te olvides de generar getters y setters de javafx
-
+			conocimientosController.habilidadesProperty().unbind();
     		// desbindear resto de controllers
     		
     	}
@@ -114,6 +120,7 @@ public class MainController implements Initializable {
 			contactoController.contactoProperty().bind(nv.contactoProperty());
 			formacionController.formacionProperty().bind(nv.formacionProperty());
 			experienciaController.experienciaProperty().bind(nv.experienciaProperty()); //crear list en la clase CV y generar getters y setters
+			conocimientosController.habilidadesProperty().bind(nv.habilidadesProperty());
 
     		// bindear resto de controllers
     		
@@ -132,6 +139,7 @@ public class MainController implements Initializable {
     	if (cvFile != null) {
     		try {
 				cv.set(JSONUtils.fromJson(cvFile, CV.class));
+				openfile = cvFile.getAbsolutePath();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -146,7 +154,18 @@ public class MainController implements Initializable {
 
     @FXML
     void onGuardarAction(ActionEvent event) {
+    	if (openfile != null) {
+			File cvFile = new File(openfile);
+			try {
+				cv.set(JSONUtils.fromJson(cvFile, CV.class));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
+    	}	else {
+			onGuardarComoAction(event);
+		}		
     }
 
     @FXML
@@ -172,6 +191,7 @@ public class MainController implements Initializable {
     void onNuevoAction(ActionEvent event) {
     	System.out.println("Has pulsado nuevo");
     	cv.set(new CV());
+    	openfile = null;
     }
 
     @FXML
@@ -181,6 +201,11 @@ public class MainController implements Initializable {
 		alert.setTitle("Dialogo de confirmacion");
 		alert.setHeaderText("Vas a cerrar el programa");
 		alert.setContentText("¿Estás seguro?");
+		// Get the Stage.
+		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+
+		// Add a custom icon.
+		stage.getIcons().add(new Image(this.getClass().getResource("/images/cv64x64.png").toString()));
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
 			Platform.exit();
