@@ -125,6 +125,11 @@ public class ContactoController implements Initializable{
 		dialog.setTitle("Nuevo e-mail");
 		dialog.setHeaderText("Crear una nueva direcciónn de correo.");
 		dialog.setContentText("E-mail:");
+		// Get the Stage.
+		Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+
+		// Add a custom icon.
+		stage.getIcons().add(new Image(this.getClass().getResource("/images/cv64x64.png").toString()));
 		Optional<String> result = dialog.showAndWait();
 		if (result.isPresent()) {
 			Email addedEmail = new Email();
@@ -136,7 +141,7 @@ public class ContactoController implements Initializable{
 
     @FXML
     void onAddTelefonoButton(ActionEvent event) {
-    	Addtelefono dialog = new Addtelefono();
+    	AddtelefonoController dialog = new AddtelefonoController();
 		Optional<Telefono> result = dialog.showAndWait();
 		if (result.isPresent()) {
 			System.out.println(result.get());

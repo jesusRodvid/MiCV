@@ -17,13 +17,13 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
-public class Addtelefono extends Dialog <Telefono> implements Initializable{
+public class AddtelefonoController extends Dialog <Telefono> implements Initializable{
 
-	public Addtelefono() {
+	public AddtelefonoController() {
 	super();
 		// TODO Auto-generated constructor stub
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AddtelefonoDialogView.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AddtelefonoView.fxml"));
 			loader.setController(this);
 			loader.load();
 		} catch (IOException e) {
@@ -47,8 +47,11 @@ public class Addtelefono extends Dialog <Telefono> implements Initializable{
 		getDialogPane().setContent(view);
 		getDialogPane().getButtonTypes().addAll(new ButtonType("Añadir", ButtonData.OK_DONE), ButtonType.CANCEL);
 		setResultConverter(d -> onAddTelefonobutton(d));
-		Stage stage = (Stage) getDialogPane().getScene().getWindow();//cargar telefono
-		stage.getIcons().add(new Image("/images/cv64x64.png"));
+		// Get the Stage.
+		Stage stage = (Stage) getDialogPane().getScene().getWindow();
+
+		// Add a custom icon.
+		stage.getIcons().add(new Image(this.getClass().getResource("/images/cv64x64.png").toString()));
 		}
 	private Telefono onAddTelefonobutton(ButtonType buttonType) {
 	    if (buttonType.getButtonData() == ButtonData.OK_DONE) {

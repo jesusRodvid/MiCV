@@ -70,7 +70,7 @@ public class FormacionController implements Initializable{
 
     @FXML
     void onAddFormacionAction(ActionEvent event) {
-    	AddFormacionDialog dialog = new AddFormacionDialog();
+    	AddFormacionController dialog = new AddFormacionController();
 		Optional<Titulo> result = dialog.showAndWait();
 		if (result.isPresent()) {
 			System.out.println(result.get());

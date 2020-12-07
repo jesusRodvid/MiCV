@@ -67,11 +67,23 @@ public class CononocimientoController implements Initializable{
 
     @FXML
     void onAddConocimientoAction(ActionEvent event) {
-
+    	AddconocimientoController dialog = new AddconocimientoController();
+		Optional<Conocimiento> result = dialog.showAndWait();
+		if (result.isPresent()) {
+			System.out.println(result.get());
+			getHabilidades().add(result.get());
+		}
+    	
     }
 
     @FXML
     void onAddIdiomaAction(ActionEvent event) {
+    	AddidiomaController dialog = new AddidiomaController();
+		Optional<Conocimiento> result = dialog.showAndWait();
+		if (result.isPresent()) {
+			System.out.println(result.get());
+			getHabilidades().add(result.get());
+		}
 
     }
 

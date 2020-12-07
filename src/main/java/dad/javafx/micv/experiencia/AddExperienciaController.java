@@ -18,14 +18,14 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class AddExperienciaDialog extends Dialog<Experiencia> implements Initializable{
+public class AddExperienciaController extends Dialog<Experiencia> implements Initializable{
 
 	
-	public AddExperienciaDialog() {
+	public AddExperienciaController() {
 		super();
 		// TODO Auto-generated constructor stub
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AddexperienciaDialogView.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AddexperienciaView.fxml"));
 			loader.setController(this);
 			loader.load();
 		} catch (IOException e) {
@@ -43,8 +43,11 @@ public class AddExperienciaDialog extends Dialog<Experiencia> implements Initial
 		
 		setResultConverter(d -> onAddExperiencia(d));
 		
+		// Get the Stage.
 		Stage stage = (Stage) getDialogPane().getScene().getWindow();
-		stage.getIcons().add(new Image("/images/cv64x64.png"));
+
+		// Add a custom icon.
+		stage.getIcons().add(new Image(this.getClass().getResource("/images/cv64x64.png").toString()));
 		
 	}
 	private Experiencia onAddExperiencia(ButtonType buttonType) {

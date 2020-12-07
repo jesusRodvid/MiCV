@@ -71,7 +71,7 @@ public class ExperienciaController implements Initializable{
 
     @FXML
     void onAddExperienciaAction(ActionEvent event) {
-    	AddExperienciaDialog dialog = new AddExperienciaDialog();
+    	AddExperienciaController dialog = new AddExperienciaController();
 		Optional<Experiencia> result = dialog.showAndWait();
 		if (result.isPresent()) {
 			System.out.println(result.get());
